@@ -162,8 +162,8 @@
               One install.<br />Your next pull request.
             </h2>
             <p>
-              Run this in the repository you want to review, then ask your agent
-              to use SuperReview.
+              Install in your repository, then ask your coding agent to review a
+              pull request. SuperReview works in the current session.
             </p>
             <p class="requirements">
               Git · Python 3.9+ · Node.js 22.20+ for npx
@@ -202,13 +202,17 @@
               aria-live="polite"
             ></p>
             <p class="prompt-label">Then ask your agent</p>
-            <blockquote>
-              Use superreview to review
-              https://github.com/example/project/pull/42. Return a local report.
-            </blockquote>
+            <blockquote>Review PR 42.</blockquote>
             <p class="install-note">
-              Runs in the current agent session by default. Restart your agent
-              if it does not discover the new skill.
+              A PR URL or “Review this branch against main” works too. The agent
+              can select SuperReview automatically. To choose it explicitly, ask
+              “Use SuperReview to review PR 42.”
+            </p>
+            <p class="install-note">
+              Codex: <code>$superreview review PR 42</code><br />
+              Claude Code: <code>/superreview 42</code><br />
+              Restart your agent if the skill is missing. Reports stay local
+              unless you ask to publish them.
             </p>
           </div>
         </div>

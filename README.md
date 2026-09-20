@@ -21,15 +21,25 @@ From the repository you want to review:
 npx skills add AutobotsAITech/SuperReview --skill superreview
 ```
 
-Select Codex or Claude Code, then ask your agent:
+Select Codex or Claude Code. Once installed, ask normally:
 
 ```text
-Use superreview to review https://github.com/example/project/pull/42.
-Return a local report.
+Review PR 42.
 ```
 
-The review runs in the current agent session. Codex also supports `$superreview`; Claude Code
-supports `/superreview`. Restart the agent if it does not discover the installed skill.
+PR URLs and requests such as “Review this branch against main” work too. The agent can select
+SuperReview automatically for review requests. To select it explicitly:
+
+| Agent | Prompt |
+| --- | --- |
+| Codex | `$superreview review PR 42` |
+| Claude Code | `/superreview 42` |
+| Either | `Use SuperReview to review PR 42.` |
+
+The review runs in the current session and returns findings and coverage gaps locally.
+Automatic selection depends on the agent; use an explicit prompt if it chooses another workflow.
+Restart the agent if the skill is missing. See [first review](docs/installation.md#first-review)
+to make SuperReview your project's default reviewer.
 
 Requirements: Git, Python 3.9+, and an authenticated coding agent with repository access.
 The npx installer needs Node.js 22.20+. See [installation](docs/installation.md) for team,

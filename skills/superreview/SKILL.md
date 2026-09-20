@@ -1,6 +1,6 @@
 ---
 name: superreview
-description: Evidence-led review of pull requests, commit ranges, and related PR stacks. Use for substantive code review, security and correctness checks, or cross-PR compatibility analysis. Produces verified findings and explicit coverage gaps; does not implement fixes.
+description: Review pull requests (PRs), branches, commit ranges, and related PR stacks for consequential defects. Use for requests such as "review PR 42" or "review this branch", including PR URLs and owner/repo#number references. Produces evidence-backed findings and coverage gaps; does not implement fixes.
 license: MIT
 metadata:
   version: "0.4.0"
@@ -10,6 +10,14 @@ metadata:
 
 Requires a coding agent with repository read access. The optional helper needs Python 3.9+
 and Git; GitHub access is needed only for remote PRs.
+
+After installation, ask `Review PR 42` or provide a PR URL. For explicit selection, use
+`$superreview review PR 42` in Codex, `/superreview 42` in Claude Code, or
+`Use SuperReview to review PR 42` in either. Automatic selection depends on the host agent.
+
+Accept ordinary review requests without requiring the user to name this skill. Briefly state
+that you are using SuperReview and identify the review target before starting. Resolve PR
+numbers from the current repository; ask for missing context when the target is ambiguous.
 
 Find consequential defects introduced by a change. Explain the triggering condition,
 execution path, and user or operational impact. An empty, well-supported review is useful.

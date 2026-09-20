@@ -2,3 +2,5 @@ interface:
   display_name: "SuperReview"
   short_description: "Evidence-led PR review with explicit coverage"
   default_prompt: "Use $superreview to review this change and report verified defects and coverage gaps."
+policy:
+  allow_implicit_invocation: true

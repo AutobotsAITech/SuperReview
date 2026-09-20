@@ -34,7 +34,7 @@ git clone https://github.com/AutobotsAITech/SuperReview.git
 cd SuperReview
 
 # Choose the destination for your agent.
-./superreview install --to ~/.codex/skills/superreview
+./superreview install --to ~/.agents/skills/superreview
 ./superreview install --to ~/.claude/skills/superreview
 ```
 
@@ -54,12 +54,34 @@ review checkpoints; finish or discard those reviews before upgrading.
 
 ## First review
 
+After installation, open your project in Codex or Claude Code and ask:
+
 ```text
-Use superreview to review https://github.com/example/project/pull/42.
-Return a local report.
+Review PR 42.
 ```
 
-A PR number uses the checkout's GitHub origin; a URL can be resolved without a checkout.
+Or provide a PR URL, `owner/repo#42`, or “Review this branch against main.” The agent can
+select SuperReview from its description and review in the current session. It returns a local
+report with findings and coverage gaps; posting to GitHub requires an explicit request.
+
+Automatic selection depends on the agent and its other instructions. To select the skill
+directly, use `$superreview review PR 42` in Codex, `/superreview 42` in Claude Code, or
+“Use SuperReview to review PR 42” in either. Restart the agent if the skill is missing.
+See the [Codex](https://learn.chatgpt.com/docs/build-skills#how-chatgpt-and-codex-use-skills) and
+[Claude Code](https://code.claude.com/docs/en/skills#control-who-invokes-a-skill) invocation docs.
+
+For a team default, add this to the project's `AGENTS.md` (Codex) or `CLAUDE.md` (Claude Code):
+
+```markdown
+For pull-request and branch-review requests, use the installed SuperReview skill
+unless another review method is requested. Return the report locally; publish only
+when explicitly asked. If the skill is unavailable, say so before proceeding.
+```
+
+Each reviewer still needs the skill installed. This instruction guides selection; it does not
+install a background bot or trigger reviews when a PR opens.
+
+A PR number uses the checkout's GitHub origin; a full URL can be resolved without a checkout.
 For private PRs, configure `GH_TOKEN`, `GITHUB_TOKEN`, or `gh auth` in the agent's environment.
 Never put a token into a prompt or repository file. Local ranges require a full Git clone.
 
