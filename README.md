@@ -2,8 +2,6 @@
 
 Code review in your coding agent, with findings you can trace to the change.
 
-An open-source project by [OmniTensorLabs](https://www.omnitensorlabs.com/).
-
 Give SuperReview a GitHub pull request or a local commit range. It guides the agent through
 correctness, security, tests, contracts, and operations, then produces a local report with
 supporting evidence and explicit coverage gaps. Large reviews can save checkpoints and resume.
