@@ -2,7 +2,7 @@ const command = document.querySelector("#install-command");
 const status = document.querySelector("#copy-status");
 document.querySelectorAll('input[name="agent"]').forEach((input) => {
   input.addEventListener("change", () => {
-    command.textContent = `npx skills add OmniTensorLabs/SuperReview --skill superreview --agent ${input.value}`;
+    command.textContent = `npx skills add AutobotsAITech/SuperReview --skill superreview --agent ${input.value}`;
     status.textContent = "";
   });
 });
