@@ -3,8 +3,9 @@
 SuperReview is a portable skill and standard-library Python helper. Keep the skill folder
 self-contained. Maintain the distinction between structural validation and review accuracy.
 
-No personal names, addresses, handles, private URLs, credentials, or proprietary source
-material belong in this repository. Use synthetic examples and neutral commit identities.
+Keep personal names, addresses, handles, private URLs, credentials, and proprietary source
+material out of source files, documentation, and examples. Use synthetic examples.
+Commit metadata may use GitHub attribution with a GitHub no-reply email address.
 Never publish reports, post reviews, or change repository visibility without explicit intent.
 
 Verify changes with `python3 -m unittest discover -s tests -v`, `python3 examples/demo.py`,
