@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "max_files": 2000,
+  "rules": [
+    {"id": "python", "globs": ["**/*.py"], "packs": ["python"], "lenses": []},
+    {"id": "typescript", "globs": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"], "packs": ["typescript"], "lenses": []},
+    {"id": "database", "globs": ["**/*.sql", "**/migrations/**", "**/migration/**"], "packs": ["database"], "lenses": ["contracts", "operations"]},
+    {"id": "llm", "globs": ["**/prompts/**", "**/*_prompt.py", "**/agents/**", "**/*llm*"], "packs": ["llm"], "lenses": ["security", "contracts", "operations"]}
+  ]
+}

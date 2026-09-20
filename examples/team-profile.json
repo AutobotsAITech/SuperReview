@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "max_files": 1000,
+  "rules": [
+    {"id": "python", "globs": ["**/*.py"], "packs": ["python"], "lenses": []},
+    {"id": "web", "globs": ["**/*.ts", "**/*.tsx", "**/*.js"], "packs": ["typescript"], "lenses": []},
+    {"id": "storage", "globs": ["**/*.sql", "**/migrations/**"], "packs": ["database"], "lenses": ["contracts", "operations"]},
+    {"id": "model-runtime", "globs": ["**/inference/**", "**/prompts/**", "**/agents/**"], "packs": ["llm"], "lenses": ["security", "contracts", "operations"]}
+  ]
+}
