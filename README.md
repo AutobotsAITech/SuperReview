@@ -7,6 +7,7 @@ correctness, security, tests, contracts, and operations, then produces a local r
 supporting evidence and explicit coverage gaps. Large reviews can save checkpoints and resume.
 
 [Website](https://autobotsaitech.github.io/SuperReview/) ·
+[skills.sh](https://www.skills.sh/autobotsaitech/superreview/superreview) ·
 [Installation](docs/installation.md) · [Production guide](docs/production.md) ·
 [Evaluation](evals/README.md)
 
