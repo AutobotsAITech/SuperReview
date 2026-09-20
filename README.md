@@ -2,12 +2,14 @@
 
 Code review in your coding agent, with findings you can trace to the change.
 
+An open-source project by [OmniTensorLabs](https://www.omnitensorlabs.com/).
+
 Give SuperReview a GitHub pull request or a local commit range. It guides the agent through
 correctness, security, tests, contracts, and operations, then produces a local report with
 supporting evidence and explicit coverage gaps. Large reviews can save checkpoints and resume.
 
-[Website](https://autobotsaitech.github.io/SuperReview/) ·
-[skills.sh](https://www.skills.sh/autobotsaitech/superreview/superreview) ·
+[Website](https://superreview.omnitensorlabs.com/) ·
+[skills.sh](https://www.skills.sh/omnitensorlabs/superreview/superreview) ·
 [Installation](docs/installation.md) · [Production guide](docs/production.md) ·
 [Evaluation](evals/README.md)
 
@@ -16,7 +18,7 @@ supporting evidence and explicit coverage gaps. Large reviews can save checkpoin
 From the repository you want to review:
 
 ```sh
-npx skills add AutobotsAITech/SuperReview --skill superreview
+npx skills add OmniTensorLabs/SuperReview --skill superreview
 ```
 
 Select Codex or Claude Code, then ask your agent:
@@ -56,7 +58,7 @@ not established; evaluate on representative changes before requiring its gate.
 Clone the repository to use the helper directly:
 
 ```sh
-git clone https://github.com/AutobotsAITech/SuperReview.git
+git clone https://github.com/OmniTensorLabs/SuperReview.git
 cd SuperReview
 
 # Prepare a request for your current agent; no model is launched.

@@ -9,14 +9,14 @@ requires an authenticated Codex or Claude Code CLI on macOS or Linux.
 With Node.js 22.20+, run this from the repository you want to review:
 
 ```sh
-npx skills add AutobotsAITech/SuperReview --skill superreview
+npx skills add OmniTensorLabs/SuperReview --skill superreview
 ```
 
 Select your agent interactively. For an unattended installation:
 
 ```sh
-npx skills add AutobotsAITech/SuperReview --skill superreview --agent codex --yes
-npx skills add AutobotsAITech/SuperReview --skill superreview --agent claude-code --yes
+npx skills add OmniTensorLabs/SuperReview --skill superreview --agent codex --yes
+npx skills add OmniTensorLabs/SuperReview --skill superreview --agent claude-code --yes
 ```
 
 The default is a project installation. Add `--global` for a user-wide installation or
@@ -30,7 +30,7 @@ updates, and removal. SuperReview itself collects no telemetry.
 ## Without Node.js
 
 ```sh
-git clone https://github.com/AutobotsAITech/SuperReview.git
+git clone https://github.com/OmniTensorLabs/SuperReview.git
 cd SuperReview
 
 # Choose the destination for your agent.
