@@ -26,4 +26,4 @@ Use an unused temporary branch name. Do not force-push if the deployment branch 
 Keep private review outputs and evaluation artifacts out of the website.
 
 The `site/CNAME` file binds the custom domain. Its DNS CNAME points to
-`omnitensorlabs.github.io`; keep the file when publishing the website branch.
+`autobotsaitech.github.io`; keep the file when publishing the website branch.
