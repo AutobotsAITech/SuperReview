@@ -10,6 +10,9 @@ Record the raw output and decide whether the proposed defect is supported; do no
 matching a title or keyword. An agent that recognizes these published cases is not evidence
 of generalization. Unit tests validate tooling, not model review quality.
 
+Score saved, human-adjudicated reports with the optional [Multivon integration](multivon.md).
+It includes an offline synthetic walkthrough and keeps failed or unjudged cases unscored.
+
 ## A meaningful team evaluation
 
 1. Build a private, de-identified dataset of historical bugs, clean changes, and realistic

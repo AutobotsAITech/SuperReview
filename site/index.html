@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SuperReview — Code review with evidence</title>
+    <meta
+      name="description"
+      content="Review pull requests in your coding agent. Trace findings to changed code, record coverage gaps, and resume large reviews. Open source, with local reports."
+    />
+    <meta name="theme-color" content="#174ac6" />
+    <meta
+      property="og:title"
+      content="SuperReview — Code review with evidence"
+    />
+    <meta
+      property="og:description"
+      content="A portable review skill for Codex and Claude Code. Findings, evidence, and explicit coverage."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="header wrap">
+      <a class="brand" href="./" aria-label="SuperReview home"
+        ><img src="mark.svg" alt="" width="30" height="30" />SuperReview</a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#workflow">How it works</a>
+        <a href="https://github.com/AutobotsAITech/SuperReview#readme">Docs</a>
+        <a
+          class="nav-source"
+          href="https://github.com/AutobotsAITech/SuperReview"
+          >GitHub <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">An open-source code review skill</p>
+            <h1>A review you can<br />trace back to code.</h1>
+            <p class="intro">
+              Give your coding agent a pull request. Get findings with a
+              concrete trigger, supporting evidence, and a clear account of what
+              was reviewed.
+            </p>
+            <div class="actions">
+              <a class="button primary" href="#install"
+                >Install SuperReview <span aria-hidden="true">↓</span></a
+              ><a
+                class="text-link"
+                href="https://github.com/AutobotsAITech/SuperReview"
+                >Explore the source <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <p class="hero-note">
+              Codex · Claude Code · Your existing agent account
+            </p>
+          </div>
+          <figure class="review-example" aria-labelledby="example-title">
+            <figcaption>
+              <span id="example-title">From change to finding</span
+              ><span class="sample-label">Synthetic example</span>
+            </figcaption>
+            <div class="code-header">
+              <span class="file-icon" aria-hidden="true">⌘</span> session.py
+              <span>Changed line 2</span>
+            </div>
+            <pre
+              class="diff"
+              aria-label="The storage lookup removes its tenant constraint"
+            ><code><span class="context">  def load_session(storage, tenant, key):</span>
+<span class="removed">−     return storage.find(tenant=tenant, key=key)</span>
+<span class="added">+     return storage.find(key=key)</span></code></pre>
+            <div class="finding">
+              <div class="finding-title">
+                <span class="severity">P1</span>
+                <h2>Session lookup loses the tenant boundary</h2>
+              </div>
+              <dl>
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>
+                    A caller requests a session belonging to another tenant.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Evidence</dt>
+                  <dd>The changed lookup filters by key alone.</dd>
+                </div>
+                <div>
+                  <dt>Countercheck</dt>
+                  <dd>
+                    The example’s storage contract has no implicit ownership
+                    filter.
+                  </dd>
+                </div>
+              </dl>
+              <div class="finding-footer">
+                <span
+                  ><span class="dot" aria-hidden="true"></span>Reasoned
+                  finding</span
+                ><span>Local report</span>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section
+        class="wrap workflow section"
+        id="workflow"
+        aria-labelledby="workflow-title"
+      >
+        <div class="section-heading">
+          <p class="eyebrow">Inside your existing workflow</p>
+          <h2 id="workflow-title">A PR in. An inspectable review out.</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="step-number">1</span>
+            <h3>Choose the change</h3>
+            <p>
+              Use a GitHub PR URL, PR number, or local commit range. The helper
+              pins the base and head so the review has a precise scope.
+            </p>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <h3>Examine the evidence</h3>
+            <p>
+              The agent traces behavior, checks callers and contracts, and tries
+              to disprove each candidate finding before reporting it.
+            </p>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <h3>Inspect the result</h3>
+            <p>
+              Read the findings and coverage gaps. Large reviews save
+              checkpoints, so you can resume without starting over.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section
+        class="install-section"
+        id="install"
+        aria-labelledby="install-title"
+      >
+        <div class="wrap install-grid">
+          <div>
+            <p class="eyebrow">Get started</p>
+            <h2 id="install-title">
+              One install.<br />Your next pull request.
+            </h2>
+            <p>
+              Run this in the repository you want to review, then ask your agent
+              to use SuperReview.
+            </p>
+            <p class="requirements">
+              Git · Python 3.9+ · Node.js 22.20+ for npx
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/AutobotsAITech/SuperReview/blob/main/docs/installation.md"
+              >Install without Node.js <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div class="install-panel">
+            <fieldset class="agent-options">
+              <legend>Choose your agent</legend>
+              <label
+                ><input
+                  type="radio"
+                  name="agent"
+                  value="codex"
+                  checked
+                />Codex</label
+              ><label
+                ><input type="radio" name="agent" value="claude-code" />Claude
+                Code</label
+              >
+            </fieldset>
+            <div class="command-box">
+              <code id="install-command"
+                >npx skills add AutobotsAITech/SuperReview --skill superreview
+                --agent codex</code
+              ><button id="copy-command" type="button">Copy command</button>
+            </div>
+            <p
+              id="copy-status"
+              class="copy-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <p class="prompt-label">Then ask your agent</p>
+            <blockquote>
+              Use superreview to review
+              https://github.com/example/project/pull/42. Return a local report.
+            </blockquote>
+            <p class="install-note">
+              Runs in the current agent session by default. Restart your agent
+              if it does not discover the new skill.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap section adoption" aria-labelledby="adoption-title">
+        <div class="section-heading">
+          <p class="eyebrow">Adopt with evidence</p>
+          <h2 id="adoption-title">Know what the review establishes.</h2>
+        </div>
+        <div class="adoption-grid">
+          <div>
+            <h3>Visible limits</h3>
+            <p>
+              Validation checks report structure, changed-line locations, and
+              declared coverage. It cannot prove that a finding is correct.
+              Missing context stays visible in the report.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/AutobotsAITech/SuperReview/blob/main/docs/production.md"
+              >Production guidance <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div>
+            <h3>Measure on your codebase</h3>
+            <p>
+              Use the optional
+              <a href="https://multivon.ai">Multivon</a> integration to score
+              saved, human-adjudicated reviews. Track supported findings, known
+              defect recall, and unscored runs.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/AutobotsAITech/SuperReview/blob/main/evals/multivon.md"
+              >Evaluation walkthrough <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+        <aside class="scope-note">
+          Production review accuracy is not established. Start with report-only
+          reviews alongside your existing process. Source inspected by an agent
+          is sent to that agent’s provider under your account.
+        </aside>
+      </section>
+    </main>
+    <footer class="wrap footer">
+      <a class="brand" href="./"
+        ><img src="mark.svg" alt="" width="24" height="24" />SuperReview</a
+      >
+      <p>MIT licensed. No hosted review service.</p>
+      <div>
+        <a
+          href="https://github.com/AutobotsAITech/SuperReview/blob/main/SECURITY.md"
+          >Security</a
+        ><a
+          href="https://github.com/AutobotsAITech/SuperReview/blob/main/CONTRIBUTING.md"
+          >Contribute</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>

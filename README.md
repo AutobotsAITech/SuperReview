@@ -1,22 +1,16 @@
 # SuperReview
 
-Review pull requests from the coding agent you already use. Give SuperReview a GitHub PR
-URL or a local commit range; it produces findings tied to changed lines and records what
-the reviewer could not verify.
+Code review in your coding agent, with findings you can trace to the change.
 
-SuperReview includes review instructions and a Python helper for running agents, checking
-reports, and resuming large reviews. It uses your agent's existing account and writes local
-reports; there is no hosted SuperReview service.
+Give SuperReview a GitHub pull request or a local commit range. It guides the agent through
+correctness, security, tests, contracts, and operations, then produces a local report with
+supporting evidence and explicit coverage gaps. Large reviews can save checkpoints and resume.
 
-Production review accuracy is not established. Evaluate it on your codebase before requiring
-its gate.
+[Website](https://autobotsaitech.github.io/SuperReview/) ·
+[Installation](docs/installation.md) · [Production guide](docs/production.md) ·
+[Evaluation](evals/README.md)
 
-## Get started
-
-Requirements: Git, Python 3.9+, and a coding agent with repository access.
-The `npx` installer also requires Node.js 22.20+.
-
-### Use the current coding agent
+## Quick start
 
 From the repository you want to review:
 
@@ -24,112 +18,78 @@ From the repository you want to review:
 npx skills add AutobotsAITech/SuperReview --skill superreview
 ```
 
-Select your agent when prompted, then ask:
+Select Codex or Claude Code, then ask your agent:
 
 ```text
 Use superreview to review https://github.com/example/project/pull/42.
 Return a local report.
 ```
 
-Codex supports `$superreview`; Claude Code supports `/superreview`. The skill runs in the
-current agent session by default. Restart the agent if the new skill is not discovered.
+The review runs in the current agent session. Codex also supports `$superreview`; Claude Code
+supports `/superreview`. Restart the agent if it does not discover the installed skill.
 
-For an unattended project installation, add `--agent codex --yes` or
-`--agent claude-code --yes`. Add `--global` for a user-wide installation.
-See the [skills CLI](https://github.com/vercel-labs/skills) for updates and telemetry settings.
-Pin a reviewed Git revision for production use.
+Requirements: Git, Python 3.9+, and an authenticated coding agent with repository access.
+The npx installer needs Node.js 22.20+. See [installation](docs/installation.md) for team,
+global, and Node-free setup. SuperReview has no hosted service or separate model subscription.
+The agent's normal provider charges and data policies apply.
 
-### Install without Node.js
+## What a finding contains
+
+> **P1 · Session lookup loses the tenant boundary** — `session.py:2`
+>
+> **Trigger:** A caller requests a session belonging to another tenant.
+> **Evidence:** The changed storage lookup filters by key alone.
+> **Countercheck:** The example's storage contract has no implicit ownership filter.
+> **Fix:** Restore the tenant constraint and test a cross-tenant request.
+
+This is a synthetic, prewritten example. Each real finding also records its root cause,
+impact, and whether it was reasoned from source or reproduced. Reports record which file/pass
+combinations were reviewed and which could not be checked.
+
+The helper validates report structure, changed-line locations, duplicates, and declared
+coverage. It does not establish that a finding is correct. Production review accuracy is
+not established; evaluate on representative changes before requiring its gate.
+
+## Run from the command line
+
+Clone the repository to use the helper directly:
 
 ```sh
 git clone https://github.com/AutobotsAITech/SuperReview.git
 cd SuperReview
 
-# Codex
-./superreview install --to ~/.codex/skills/superreview
+# Prepare a request for your current agent; no model is launched.
+./superreview start 42 --repo /path/to/project
 
-# Claude Code
-./superreview install --to ~/.claude/skills/superreview
-```
-
-For a team installation, pass the target repository's `.agents/skills/superreview` or
-`.claude/skills/superreview` directory. This installer refuses existing destinations.
-Other agents can read [SKILL.md](skills/superreview/SKILL.md) directly.
-
-To prepare a review explicitly, run `./superreview start <target>` and give its generated
-`review-request.md` to the current agent. This command does not invoke a model.
-
-### Run an agent CLI
-
-From a cloned SuperReview directory on macOS or Linux, use an installed, authenticated CLI:
-
-```sh
+# Or launch an installed, authenticated agent CLI.
 ./superreview review https://github.com/example/project/pull/42 --agent claude
 ./superreview review --repo /path/to/project --base origin/main --agent codex
 ```
 
-The runner reads committed Git objects, invokes the selected agent, and writes a local report.
-Source is sent to that agent's provider under the existing account; provider charges apply.
-The tested Codex integration uses an experimental MCP transport. See
-[execution controls and compatibility](docs/agent-execution.md).
+Targets include PR URLs, PR numbers, `owner/repo#number`, and local commit ranges. GitHub
+intake uses `GH_TOKEN`, `GITHUB_TOKEN`, or `gh auth`. Local reviews inspect committed Git
+objects; staged and uncommitted changes are excluded.
 
-## Targets and checkpoints
+Direct execution supports macOS and Linux. The tested Codex adapter uses an experimental MCP
+transport. See [agent execution](docs/agent-execution.md) for compatibility, budgets, artifacts,
+and exit codes, and [workflows](skills/superreview/references/workflows.md) for checkpoints.
 
-Targets include PR URLs, numbers, `owner/repo#number`, branches, and commit ranges:
+## Evaluate review quality
 
-```sh
-./superreview start 42 --repo /path/to/project
-./superreview start 'example/project#42'
-./superreview start origin/main..feature --repo /path/to/project
-```
+The optional [Multivon integration](evals/multivon.md) scores saved reviews against human
+adjudications. It reports supported-finding precision, recall against known defects, and
+unscored cases separately. It runs locally without model calls. Multivon is not needed to
+install or use the review skill.
 
-PR numbers use the checkout's GitHub origin or `--github-repo owner/repo`. GitHub authentication
-uses `GH_TOKEN`, `GITHUB_TOKEN`, or `gh auth`. PR URLs need no checkout. Local ranges require a
-full clone; staged and uncommitted changes are excluded.
-
-Large reviews save file-group checkpoints and require a final coordinator pass. Resume with:
-
-```sh
-./superreview review --resume /path/to/review-bundle --agent claude
-```
-
-Inside the current agent, use `resume --bundle ...` to find the next task. Changes to commits,
-profile, or skill invalidate checkpoints. See [workflows](skills/superreview/references/workflows.md)
-for budgets, native-agent steps, and feedback records.
-
-## Reports and validation
-
-Reviews cover correctness, security, tests, contracts, and operations; deep reviews add design.
-Guidance is included for Python, TypeScript/JavaScript, databases, and LLM systems.
-
-The helper validates report structure, changed-line anchors, duplicates, and declared coverage.
-It cannot prove a finding is correct. Feedback records accepted, rejected, duplicate, or
-out-of-scope decisions separately from the original report and gate. Reports are local;
-publication requires a separate host workflow.
-
-Review and gate exit codes:
-
-| Exit | Meaning |
-| --- | --- |
-| 0 | Complete coverage, no findings at or above the threshold |
-| 1 | Findings at or above the threshold |
-| 2 | Invalid input or execution failure |
-| 3 | Incomplete coverage or recorded limitations |
-| 130 | Interrupted execution |
-
-For custom integrations, use `plan`, `init-report`, `validate`, `render`, and `gate`.
-Run `./superreview <command> --help` for options. The
-[report contract](skills/superreview/references/evidence.md) defines coverage and severity.
+The bundled [evaluation cases](evals/cases.json) and `python3 examples/demo.py` are synthetic
+learning exercises. They demonstrate the workflow, not measured production accuracy.
 
 ## Documentation
 
-- [Production adoption](docs/production.md): rollout, trust boundaries, and CI integration.
-- [Profiles](skills/superreview/references/configuration.md): routing and review scope.
-- [Design](docs/design.md): review phases and report validation.
-- [Verification](docs/audit.md) and [evaluation protocol](evals/README.md).
+- [Production adoption](docs/production.md): trust boundaries, rollout, and CI integration.
+- [Configuration](skills/superreview/references/configuration.md): trusted profiles and scope.
+- [Report contract](skills/superreview/references/evidence.md): findings, coverage, and severity.
+- [Design](docs/design.md) and [verification](docs/audit.md): architecture and check coverage.
 - [Contributing](CONTRIBUTING.md) and [security](SECURITY.md).
-
-Run `python3 examples/demo.py` for an offline walkthrough with a **prewritten synthetic finding**.
-The demo checks report mechanics; it does not run a model or measure review quality.
 
 MIT licensed.

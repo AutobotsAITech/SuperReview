@@ -52,6 +52,7 @@ def main():
     print("Synthetic, prewritten review validated; P1 gate correctly rejected the change.")
     print("Report: " + str(directory / "review.md"))
     print("Temporary artifacts are retained for inspection; remove this demo directory when finished.")
+    return directory
 
 
 if __name__ == "__main__":

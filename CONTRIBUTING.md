@@ -22,6 +22,15 @@ notes. Do not silently relax validation or claim measured model quality from uni
 Explain what changed, why, and how it was verified. Keep source-code review read-only unless
 a separate task explicitly requests fixes.
 
+The optional evaluation adapter has an additional integration check:
+
+```sh
+python3 -m pip install -r evals/requirements.txt
+python3 -m unittest discover -s tests -p test_evaluation.py -v
+```
+
+Use Python 3.10+ for that check. See [website maintenance](docs/website.md) for the static site.
+
 ## CI
 
 The [workflow template](examples/github-actions-ci.yml) runs these checks on Linux and macOS.
