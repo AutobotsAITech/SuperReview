@@ -5,6 +5,6 @@ Its source lives in [OmniTensorLabs/superreview-web](https://github.com/OmniTens
 See that repository for local preview and Vercel deployment instructions.
 
 This repository's `site/` directory contains only the redirect for
-`https://autobotsaitech.github.io/SuperReview/`, served from `gh-pages`.
+`https://omnitensorlabs.github.io/SuperReview/`, served from `gh-pages`.
 Keep its destination aligned with the public website. Do not configure a custom domain
 on GitHub Pages; Vercel serves the website's custom domain.
